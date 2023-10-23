@@ -26,10 +26,9 @@ class Tech(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Tech")
     name = models.CharField(max_length=255, verbose_name="Nombre Tech")
     last_name = models.CharField(max_length=255)
-
     speciality = models.ManyToManyField(
-        Speciality, related_name="techs"
-    )
+        Speciality, related_name="techs" 
+    ) ###############
 
     def __str__(self):
         return f"{self.name} {self.last_name}"
@@ -44,7 +43,7 @@ class Tech(models.Model):
     def create(self, name, last_name, speciality):
         self.name = name
         self.last_name = last_name
-        self.speciality.add(*speciality)
+        self.speciality.add(*speciality) ######################
         self.save()
 
 
@@ -59,17 +58,21 @@ class Criticy(models.Model):
         self.level = level
         self.save()
 
+from django.db import models
+
+
 class TicketHistory(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Ticket History")
-    entry = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creación Ticket History")
+    date = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de registro en el historial")
+    description = models.TextField(default="", verbose_name="Descripción del cambio")
 
     def __str__(self):
-        return self.entry
+        return self.description
 
-    def add_entry(self, entry):
-        self.entry = entry
+    def add_entry(self, description):
+        self.description = description
         self.save()
+
 
 class Ticket(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Ticket")
@@ -86,6 +89,7 @@ class Ticket(models.Model):
     history = models.OneToOneField(
         TicketHistory, on_delete=models.CASCADE, related_name="ticket"
     )
+    status = models.CharField(max_length=255, default="open")
 
     def __str__(self):
         return self.title
@@ -95,10 +99,12 @@ class Ticket(models.Model):
         self.description = description
         self.criticy = criticy
         self.tech = tech
+        self.status = "open"
         self.save()
 
     def close_ticket(self):
-        pass
+        self.status = "closed"
+        self.save()
 
 
 
