@@ -1,9 +1,10 @@
 from django.db import models
-
+import uuid
 # Create your models here.
+
 class Speciality(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Especialidad")
+    name = models.CharField(max_length=255, verbose_name="Nombre Especialidad")
 
     def __str__(self):
         return self.name
@@ -22,7 +23,7 @@ class Speciality(models.Model):
         self.delete()
 
 class Tech(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True)
     name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
 
@@ -48,7 +49,7 @@ class Tech(models.Model):
 
 
 class Criticy(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True)
     level = models.CharField(max_length=255)
 
     def __str__(self):
@@ -59,7 +60,7 @@ class Criticy(models.Model):
         self.save()
 
 class TicketHistory(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True)
     entry = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -71,7 +72,7 @@ class TicketHistory(models.Model):
         self.save()
 
 class Ticket(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
