@@ -6,7 +6,7 @@ class Speciality(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Especialidad")
     name = models.CharField(max_length=255, verbose_name="Nombre Especialidad")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     def create(self, name):
@@ -23,8 +23,8 @@ class Speciality(models.Model):
         self.delete()
 
 class Tech(models.Model):
-    id = models.UUIDField(primary_key=True)
-    name = models.CharField(max_length=255)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Tech")
+    name = models.CharField(max_length=255, verbose_name="Nombre Tech")
     last_name = models.CharField(max_length=255)
 
     speciality = models.ManyToManyField(
@@ -49,8 +49,8 @@ class Tech(models.Model):
 
 
 class Criticy(models.Model):
-    id = models.UUIDField(primary_key=True)
-    level = models.CharField(max_length=255)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Criticy")
+    level = models.CharField(max_length=255, verbose_name="Level Criticy")
 
     def __str__(self):
         return self.level
@@ -60,9 +60,9 @@ class Criticy(models.Model):
         self.save()
 
 class TicketHistory(models.Model):
-    id = models.UUIDField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Ticket History")
     entry = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creación Ticket History")
 
     def __str__(self):
         return self.entry
@@ -72,8 +72,8 @@ class TicketHistory(models.Model):
         self.save()
 
 class Ticket(models.Model):
-    id = models.UUIDField(primary_key=True)
-    title = models.CharField(max_length=255)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Ticket")
+    title = models.CharField(max_length=255, verbose_name="Titulo Ticket")
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
