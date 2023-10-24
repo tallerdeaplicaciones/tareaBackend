@@ -4,7 +4,7 @@ import uuid
 
 class Speciality(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Especialidad")
-    name = models.CharField(max_length=255, verbose_name="Nombre Especialidad")
+    name = models.CharField(max_length=50, verbose_name="Nombre Especialidad", blank=False, null=False)
 
     def __str__(self) -> str:
         return self.name
@@ -24,11 +24,9 @@ class Speciality(models.Model):
 
 class Tech(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Tech")
-    name = models.CharField(max_length=255, verbose_name="Nombre Tech")
-    last_name = models.CharField(max_length=255)
-    speciality = models.ManyToManyField(
-        Speciality, related_name="techs" 
-    ) ###############
+    name = models.CharField(max_length=50, verbose_name="Nombre Tech", blank=False, null=False)
+    last_name = models.CharField(max_length=50, blank=False, null=False)
+    speciality = models.ManyToManyField(Speciality, related_name="techs")
 
     def __str__(self):
         return f"{self.name} {self.last_name}"
@@ -43,13 +41,13 @@ class Tech(models.Model):
     def create(self, name, last_name, speciality):
         self.name = name
         self.last_name = last_name
-        self.speciality.add(*speciality) ######################
+        self.speciality.add(*speciality)
         self.save()
 
 
 class Criticy(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Criticy")
-    level = models.CharField(max_length=255, verbose_name="Level Criticy")
+    level = models.CharField(max_length=255, verbose_name="Level Criticy", blank=False, null=False)
 
     def __str__(self):
         return self.level
@@ -58,13 +56,11 @@ class Criticy(models.Model):
         self.level = level
         self.save()
 
-from django.db import models
-
 
 class TicketHistory(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Ticket History")
-    date = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de registro en el historial")
-    description = models.TextField(default="", verbose_name="Descripción del cambio")
+    date = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de registro en el historial", blank=False, null=False)
+    description = models.TextField(default="", verbose_name="Descripción del cambio", blank=False, null=False)
 
     def __str__(self):
         return self.description
@@ -73,24 +69,25 @@ class TicketHistory(models.Model):
         self.description = description
         self.save()
 
+class Status(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Status")
+    estado = models.CharField(max_length=30, blank=False, null=False)
+
+    def __str__(self) -> str:
+        return self.estado
+
 
 class Ticket(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID Ticket")
-    title = models.CharField(max_length=255, verbose_name="Titulo Ticket")
-    description = models.TextField()
+    title = models.CharField(max_length=255, verbose_name="Titulo Ticket", blank=False, null=False)
+    description = models.TextField(blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    criticy = models.ForeignKey(
-        Criticy, on_delete=models.CASCADE, related_name="tickets"
-    )
-    tech = models.ForeignKey(
-        Tech, on_delete=models.SET_NULL, related_name="tickets", null=True
-    )
-    history = models.OneToOneField(
-        TicketHistory, on_delete=models.CASCADE, related_name="ticket"
-    )
-    status = models.CharField(max_length=255, default="open")
-
+    criticy = models.ForeignKey(Criticy, on_delete=models.CASCADE, related_name="tickets", blank=False, null=False)
+    tech = models.ForeignKey(Tech, on_delete=models.SET_NULL, related_name="tickets", blank=True, null=True)
+    history = models.OneToOneField(TicketHistory, on_delete=models.CASCADE, related_name="ticket", blank=True, null=True)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name="tickets")
+    
     def __str__(self):
         return self.title
 
