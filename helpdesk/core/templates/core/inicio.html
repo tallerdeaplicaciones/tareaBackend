@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+{% block content%}
+    <div>
+        <h2 class="mt-4">Tickets Creados</h2>
+        <ul class="list-group">
+            <li class="list-group-item">Ticket 1</li>
+            <li class="list-group-item">Ticket 2</li>
+            <li class="list-group-item">Ticket 3</li>
+            <!-- Agrega más elementos de lista según tus tickets -->
+        </ul>
+        {% if tickets %} 
+        {% for i in tickets %} 
+            <table class="table table-striped">
+                <thead>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Fecha de creacion</th>
+                </thead>
+                <tbody>
+                    <td>{{i.id}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.description}}</td>
+                    <td>{{i.created_at}}</td>
+                </tbody>
+            </table>
+        {% endfor %}
+        {% else %}
+        <h2>No existen Tickets</h2>
+        {% endif%}
+    </div>
+    
+{% endblock %}

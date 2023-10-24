@@ -9,9 +9,9 @@
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">Mi Aplicación de Tickets</a>
-            <a href="">Crear Tecnico</a>
-            <a href="">Crear Ticket</a>
+            <a class="navbar-brand" href="{% url 'home' %}">Mi Aplicación de Tickets</a>
+            <a class="btn btn-success" href="">Crear Tecnico</a><!--Carlo tienes que conectarlo con el formTech-->
+            <a class="btn btn-success" href="{% url 'ticket_form' %}">Crear Ticket</a>
         </div>
     </nav>
     <div class="container">
