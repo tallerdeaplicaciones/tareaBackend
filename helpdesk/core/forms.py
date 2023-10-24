@@ -9,3 +9,12 @@ class TicketForm(forms.ModelForm):
             'title' : forms.TextInput(attrs={'class' : 'form-control'}),
             'description':forms.Textarea(attrs={'class':'form-control'}),
         }
+class TechForm(forms.ModelForm):
+    class Meta:
+        model = Tech
+        fields = ['name', 'last_name', 'speciality']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'speciality': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        }
