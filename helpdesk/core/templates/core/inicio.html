@@ -20,8 +20,8 @@
                     <td>{{i.criticy}}</td>
                     <td>{{i.tech}}</td>
                     <td>{{i.status}}</td>
-                    <td><a class="btn btn-warning ms-5" href="{% url 'update_ticket' pk=i.id %}"><i class="bi bi-person-workspace"></i></a></td>
-                    <td><a class="btn btn-outline-danger ms-4"><i class="bi bi-x-octagon-fill"></i></a></td>
+                    <td><a class="btn btn-warning ms-5" href="{% url 'update_ticket' i.id %}"><i class="bi bi-person-workspace"></i></a></td>
+                    <td><a class="btn btn-outline-danger ms-4" href="{% url 'close_ticket' i.id %}"><i class="bi bi-x-octagon-fill"></i></a></td>
                 </tbody> 
                 {% endfor %}
             </table>

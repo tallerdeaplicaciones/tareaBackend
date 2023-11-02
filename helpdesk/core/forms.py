@@ -18,3 +18,8 @@ class TechForm(forms.ModelForm):
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'speciality': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
+
+class CloseTicketForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['status']

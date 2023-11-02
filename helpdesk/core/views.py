@@ -2,10 +2,9 @@ from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Ticket
-from .forms import TicketForm
-from .models import Tech
-from .forms import TechForm
+from .models import Ticket, Tech
+from .forms import TicketForm, CloseTicketForm, TechForm
+
 
 class Home(ListView):
     model = Ticket
@@ -23,6 +22,12 @@ class TicketUpdateView(UpdateView):
     model = Ticket
     form_class = TicketForm
     template_name = 'ticket/ticketUpdate.html'
+    success_url = reverse_lazy('home')
+
+class TicketCloseView(UpdateView):
+    model = Ticket
+    form_class = CloseTicketForm
+    template_name = 'ticket/ticketClose.html'
     success_url = reverse_lazy('home')
 
 
