@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="mt-4 mb-4 text-center">
+    <h2>Formulario Edición Tickets</h2>    
+</div>
+
+
+<form action="" method="post" class="col-7 mx-auto">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="is-grouped mt-5">
+        <button class="btn btn-success">Actualizar</button>
+        <a class="btn btn-dark" href="{% url 'home' %}">Back to home</a>
+    </div>
+</form>
+{% endblock %}

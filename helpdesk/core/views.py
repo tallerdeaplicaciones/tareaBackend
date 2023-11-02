@@ -18,6 +18,14 @@ class TicketCreateView(CreateView):
     form_class = TicketForm
     template_name = 'ticket/ticketForm.html'
     success_url = reverse_lazy('home')
+    
+class TicketUpdateView(UpdateView):
+    model = Ticket
+    form_class = TicketForm
+    template_name = 'ticket/ticketUpdate.html'
+    success_url = reverse_lazy('home')
+
+
 class TechCreateView(CreateView):
     model = Tech
     form_class = TechForm
